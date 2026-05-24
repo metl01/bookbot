@@ -1,14 +1,26 @@
-def word_count(filepath: str):
-    with open(filepath) as f:
-        file_contents = f.read()
-        file_contents_list = file_contents.split()
-        num_words = len(file_contents_list)
-        return f"Found {num_words} total words"
+from typing import TypedDict
 
-def letter_count(filepath:str ):
-    count = 0
-    with open(filepath) as f:
-        file_contents = f.read() 
-        for c in file_contents:
-            count += 1
-            print(count)
+def word_count(file_contents: str) -> int:
+        words = file_contents.split()
+        return len(words)
+
+def letter_count(file_contents:str ) -> dict[str, int]:
+    counted_letters = {}
+    for c in file_contents:
+         lowered = c.lower()
+         counted_letters[lowered] = counted_letters.get(lowered, 0) + 1
+    return counted_letters
+
+class CharacterCount(TypedDict):
+    char: str
+    num: int
+
+def sort_on(letters):
+    return letters["num"]
+
+def sorted_count(letters: dict[str, int]) -> list[CharacterCount]:
+    result = [] 
+    for letter in letters:
+        result.append({"char": letter, "num": letters[letter]})
+        result.sort(reverse=True, key=sort_on)
+    return result
