@@ -4,8 +4,11 @@ from stats import sorted_count
 import sys
 
 def main():
-    print("Usage: python3 main.py <path_to_book>")
+    if len(sys.argv) < 2:
+        print("Usage: python3 main.py <path_to_book>")
+        sys.exit(1)
     book_path = sys.argv[1]
+
     text = get_book_text(book_path)
     total_count = f"Found {word_count(text)} total words"
     total_letters = letter_count(text)
